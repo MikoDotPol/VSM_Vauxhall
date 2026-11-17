@@ -6,7 +6,7 @@ export default function PassengerLayout({ children }: { children: React.ReactNod
   return (
     <SearchProvider>
       <div className="min-h-screen pb-20 bg-gray-50">
-        <TopHeader /> {/* <-- Шапка теперь на всех страницах */}
+        <TopHeader />
         {children}
       </div>
       <BottomNav />
