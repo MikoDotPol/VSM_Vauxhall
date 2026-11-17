@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useSearch } from '@/contexts/SearchContext';
 import { StationCombobox } from '@/components/passenger/StationCombobox';
-import { Clock, Info, Coffee, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, Clock, Info, Coffee, ShoppingBag } from 'lucide-react';
 
 const StationMapSVG = () => (
   <svg viewBox="0 0 800 400" className="w-full h-80 bg-gray-100 rounded-lg">
@@ -24,21 +25,14 @@ const StationMapSVG = () => (
 export default function WaitPage() {
   const { search, updateSearch } = useSearch();
 
-  // АВТО-ПОДСТАНОВКА ВОКЗАЛА И ВРЕМЕНИ
   useEffect(() => {
     const updates: Record<string, string> = {};
-    
-    // Если вокзал не выбран, но есть вокзал отправления
     if (!search.station && search.fromStation) {
       updates.station = search.fromStation;
     }
-    
-    // Если время ожидания не указано, но есть время поиска
     if (!search.waitTime && search.time) {
       updates.waitTime = search.time;
     }
-
-    // Применяем изменения только если они есть
     if (Object.keys(updates).length > 0) {
       updateSearch(updates);
     }
@@ -46,7 +40,14 @@ export default function WaitPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 pt-6 pb-8 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Ожидание поезда</h1>
+      
+      {/* Кнопка назад и заголовок */}
+      <div className="flex items-center gap-3">
+        <Link href="/passenger" className="p-2 bg-white rounded-full shadow-sm border border-gray-200 hover:bg-gray-50 transition">
+          <ArrowLeft size={20} className="text-gray-600" />
+        </Link>
+        <h1 className="text-2xl font-bold text-gray-800">Ожидание поезда</h1>
+      </div>
 
       <section className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 space-y-4">
         <h2 className="flex items-center gap-2 font-bold text-gray-800 mb-2">
@@ -64,9 +65,9 @@ export default function WaitPage() {
           <label className="block text-sm font-medium text-gray-700 mb-1">Время прибытия / отправления</label>
           <input
             type="time"
-            value={search.waitTime}
+            value={search.waitTime || ''}
             onChange={(e) => updateSearch({ waitTime: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900"
           />
         </div>
       </section>
