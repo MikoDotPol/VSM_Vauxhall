@@ -6,8 +6,8 @@ import DebugConsole from "@/components/DebugConsole";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Умный вокзал ВСМ",
-  description: "Платформа-оркестратор",
+  title: "Транзит",
+  description: "Цифровая среда вокзала",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
